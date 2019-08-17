@@ -8,9 +8,9 @@ def clear_screen():
 def display_board(board):
     clear_screen()
     print(' '.rjust(50) + board[7] + ' | ' + board[8] + ' | ' + board[9] + '\n'
-     + ' '.rjust(50) + '----------' + '\n'
+     + ' '.rjust(50) + '==+===+==' + '\n'
      + ' '.rjust(50) + board[4] + ' | ' + board[5] + ' | '+ board[6] + '\n' 
-     + ' '.rjust(50) + '----------' + '\n'
+     + ' '.rjust(50) + '==+===+==' + '\n'
      + ' '.rjust(50) + board[1] + ' | ' + board[2] + ' | ' + board[3] + '\n\n')
 
 #Assign Players
@@ -65,17 +65,24 @@ def full_board_check(board):
 
 #choose position
 def player_choice(board, player):
-    validchoice = False
-    choice = ''
-    while validchoice == False:
-        while not choice in range(1,9):
+    hasSpace = False
+    validEntry = False
+    while hasSpace == False:
+        while validEntry == False:   
             try:
-                choice = int(input(f'{player}, choose a square (use your numpad)'))
+                choice = input(f'{player}, choose a square (use your numpad)')
+                intchoice = int(choice)
+                if intchoice in range(1,10):
+                    break
             except:
-                pass
-        if space_check(board, choice):
-            validchoice = True
-            return choice
+                display_board(board)
+                print('Choose a valid number from your numpad!')
+        if space_check(board, intchoice):
+            hasSpace = True
+            return intchoice
+        else:
+            display_board(board)
+            print('already filled! Pick another square.')
 
 #play again?
 def replay():
